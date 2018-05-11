@@ -20,19 +20,30 @@ assert 'レース情報' in driver.title
 
 table = []
 h_li = []
-for n in range(2,7):
-    h_li.append(driver.find_element_by_css_selector('#shutuba > diary_snap > table > tbody > tr:nth-child(1) > th:nth-child({})'.format(str(n))).text.replace('\n', ''))
+for n in range(1,9):
+    if n == 3:
+        pass
+    else:
+        h_li.append(driver.find_element_by_css_selector('#shutuba > diary_snap > table > tbody > tr:nth-child(1) > th:nth-child({})'.format(str(n))).text.replace('\n', ''))
 table.append(h_li)
 
 #table取得
-for i in range(4, 22):
-    element = driver.find_element_by_css_selector('#shutuba > diary_snap > table > tbody > tr:nth-child({})'.format(str(n)))
-    e_li = []
-    for j in range(2,7):
-        e_li.append(driver.find_element_by_css_selector('#shutuba > diary_snap > table > tbody > tr:nth-child({}) > td:nth-child({})'.format(str(i), str(j))).text.replace('\n', ''))
-    table.append(e_li)
+try:
+    for i in range(4, 22):
+        element = driver.find_element_by_css_selector('#shutuba > diary_snap > table > tbody > tr:nth-child({})'.format(str(n)))
+        e_li = []
+        for j in range(1,9):
+            if j == 3:
+                pass
+            else:
+                e_li.append(driver.find_element_by_css_selector('#shutuba > diary_snap > table > tbody > tr:nth-child({}) > td:nth-child({})'.format(str(i), str(j))).text.replace('\n', ''))
+        table.append(e_li)
+except:
+    pass
 
-f = open('output.csv', 'w')
+title = driver.title.rstrip('/ 出馬表｜レース情報(JRA) - netkeiba.com').replace(' ,　','_')
+
+f = open(u'{}.csv'.format(title), 'w')
 writer = csv.writer(f, lineterminator = '\n')
 writer.writerow(table)
 f.close()
