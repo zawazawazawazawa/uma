@@ -41,9 +41,11 @@ try:
 except:
     pass
 
-title = driver.title.rstrip('/ 出馬表｜レース情報(JRA) - netkeiba.com').replace(' ,　','_')
+title = driver.title.rstrip('/ 出馬表｜レース情報(JRA) - netkeiba.com').replace('/', '_')
 
-f = open(u'{}.csv'.format(title), 'w')
-writer = csv.writer(f, lineterminator = '\n')
-writer.writerow(table)
-f.close()
+
+with open('{}.csv'.format(title), 'w') as file:
+    for row in table:
+        file.write(','.join(row) + '\n')
+
+driver.quit()

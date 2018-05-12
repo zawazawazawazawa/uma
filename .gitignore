@@ -1,3 +1,4 @@
 env
 uma_scraper
 debug.log
+*.csv
